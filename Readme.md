@@ -25,8 +25,7 @@ This example illustrates how to use the upload control in batch edit mode. Note 
             </dx:ASPxUploadControl>
         </EditItemTemplate>
     </dx:GridViewDataTextColumn>
-
-```
+    ```
 
 2. Handle the grid's client-side [BatchEditStartEditing](https://docs.devexpress.com/AspNet/js-ASPxClientGridView.BatchEditStartEditing) event to set the grid's cell values to the upload control. Use the [rowValues](https://docs.devexpress.com/AspNet/js-ASPxClientGridViewBatchEditStartEditingEventArgs.rowValues) argument property to get the focused cell value:
 
