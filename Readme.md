@@ -3,20 +3,18 @@
 [![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T191652)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 <!-- default badges end -->
-<!-- default file list -->
-*Files to look at*:
 
-* [Default.aspx](./CS/Default.aspx) (VB: [Default.aspx](./VB/Default.aspx))
-* [Default.aspx.cs](./CS/Default.aspx.cs) (VB: [Default.aspx.vb](./VB/Default.aspx.vb))
-<!-- default file list end -->
-# ASPxGridView - Batch Edit - How to use the upload control in Batch Edit mode
+# GridView for ASP.NET Web Forms - How to use the upload control in batch edit mode
 <!-- run online -->
 **[[Run Online]](https://codecentral.devexpress.com/t191652/)**
 <!-- run online end -->
 
+This example illustrates how to use the upload control in batch edit mode. Note that all files are stored in memory until you call the update method.
 
-This example is based on <a href="https://www.devexpress.com/Support/Center/p/T115096">T115096: ASPxGridView - Batch Editing - A simple implementation of an EditItem template</a> and illustrates how to use the upload control in Batch edit mode. Note that all files are <strong>stored in memory</strong> until you call the update method.<br /><br />1) Place ASPxUploadControl into the column's EditItem template:<br />
 
+## Implementation Details
+
+1. Place an upload control to a column's edit item template:
 
 ```aspx
 <dx:GridViewDataTextColumn FieldName="FileName" Width="200">
@@ -30,9 +28,7 @@ This example is based on <a href="https://www.devexpress.com/Support/Center/p/T
 
 ```
 
-
-<br />2) Handle the grid's client-side <a href="https://help.devexpress.com/#AspNet/DevExpressWebASPxGridViewScriptsASPxClientGridView_BatchEditStartEditingtopic">BatchEditStartEditing</a> event to set the grid's cell values to the upload control. It is possible to get the focused cell value using the <a href="https://help.devexpress.com/#AspNet/DevExpressWebASPxGridViewScriptsASPxClientGridViewBatchEditStartEditingEventArgs_rowValuestopic">e.rowValues</a> property:<br />
-
+2. Handle the grid's client-side [BatchEditStartEditing](https://docs.devexpress.com/AspNet/js-ASPxClientGridView.BatchEditStartEditing) event to set the grid's cell values to the upload control. Use the [rowValues](https://docs.devexpress.com/AspNet/js-ASPxClientGridViewBatchEditStartEditingEventArgs.rowValues) argument property to get the focused cell value:
 
 ```js
 function OnBatchStartEditing(s, e) {
@@ -49,20 +45,18 @@ function OnBatchStartEditing(s, e) {
 }
 ```
 
-
-<br />3) Handle the grid's client-side <a href="https://documentation.devexpress.com/#AspNet/DevExpressWebScriptsASPxClientGridView_BatchEditConfirmShowingtopic">BatchEditConfirmShowing</a> event to prevent data loss on the upload control's callbacks:<br />
-
+3. Handle the grid's client-side [BatchEditConfirmShowing](https://docs.devexpress.com/AspNet/js-ASPxClientGridView.BatchEditConfirmShowing) event to prevent data loss on the upload control's callbacks:
 
 ```js
 function OnBatchConfirm(s, e) {
     e.cancel = browseClicked;
 }
-
 ```
 
+This `browseClicked` flag is set to `true` when the upload control starts uploading a file and to `false` when the file has been uploaded or a user starts editing another cell.
 
-This "browseClicked" flag is set to true when the upload control starts uploading a file and to false when the file has been uploaded or the user starts editing another cell.<br /><br />4) Handle the upload control's client-side <a href="https://documentation.devexpress.com/#AspNet/DevExpressWebScriptsASPxClientUploadControl_TextChangedtopic">TextChanged</a> and <a href="https://documentation.devexpress.com/#AspNet/DevExpressWebScriptsASPxClientUploadControl_FileUploadCompletetopic">FileUploadComplete</a> events to automatically upload the selected file and update the cell value after:<br />
 
+4. Handle the upload control's client-side [TextChanged](https://docs.devexpress.com/AspNet/js-ASPxClientUploadControl.TextChanged) and [FileUploadComplete](https://docs.devexpress.com/AspNet/js-ASPxClientUploadControl.FileUploadComplete) events to automatically upload the selected file and update the cell value after:
 
 ```js
 function OnFileUploadComplete(s, e) {
@@ -77,9 +71,7 @@ function OnTextChanged(s, e) {
 }
 ```
 
-
-<br />5) Handle the upload control's server-side <a href="https://documentation.devexpress.com/#AspNet/DevExpressWebASPxUploadControl_FileUploadCompletetopic">FileUploadComplete</a> event to store the uploaded file in the session:<br />
-
+5. Handle the upload control's [FileUploadComplete](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxUploadControl.FileUploadComplete) event to store the uploaded file in the session:
 
 ```cs
 protected void ASPxUploadControl1_FileUploadComplete(object sender, FileUploadCompleteEventArgs e) {
@@ -94,9 +86,15 @@ protected void ASPxUploadControl1_FileUploadComplete(object sender, FileUploadCo
 
 ```
 
+Now you can access all the uploaded files in the [BatchUpdate](https://docs.devexpress.com/AspNet/DevExpress.Web.ASPxGridBase.BatchUpdate) event handler. Clear the session storage after you have updated the files.
 
-<br />Now you can access all the uploaded files in the <a href="https://documentation.devexpress.com/#AspNet/DevExpressWebASPxGridView_BatchUpdatetopic">BatchUpdate</a> event handler. Clear the session storage after you have updated the files.<br /><br /><strong>See also:</strong><br /><a href="https://www.devexpress.com/Support/Center/p/T191714">T191714: GridView - Batch Edit - How to use the upload control in Batch Edit mode</a>
+## Files to Review
 
-<br/>
+* [Default.aspx](./CS/Default.aspx) (VB: [Default.aspx](./VB/Default.aspx))
+* [Default.aspx.cs](./CS/Default.aspx.cs) (VB: [Default.aspx.vb](./VB/Default.aspx.vb))
 
+## More Examples
+
+*[Grid View for ASP.NET Web Forms - How to implement an edit item template in batch mode](https://github.com/DevExpress-Examples/asp-net-web-forms-grid-edit-item-template-in-batch-mode)
+*[GridView for ASP.NET MVC - How to use the upload control in batch edit mode](https://github.com/DevExpress-Examples/asp-net-mvc-grid-use-upload-control-in-batch-edit-mode)
 
