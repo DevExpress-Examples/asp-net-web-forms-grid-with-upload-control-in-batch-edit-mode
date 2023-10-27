@@ -6,7 +6,7 @@
 
 # GridView for ASP.NET Web Forms - How to use the upload control in batch edit mode
 <!-- run online -->
-**[[Run Online]](https://codecentral.devexpress.com/t191652/)**
+**[[Run Online]](https://codecentral.devexpress.com/128532872/)**
 <!-- run online end -->
 
 This example illustrates how to use the upload control in batch edit mode. Note that all files are stored in memory until you call the update method.
